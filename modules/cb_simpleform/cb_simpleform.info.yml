@@ -1,0 +1,9 @@
+name: CB Simple Form
+type: module
+description: 'A form that uses the Private Tempstore'
+package: CB trials modules
+core_version_requirement: ^9
+dependencies:
+  - cbtrials:cbtrials
+
+
