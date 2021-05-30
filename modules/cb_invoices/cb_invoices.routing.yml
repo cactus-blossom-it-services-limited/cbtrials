@@ -1,0 +1,39 @@
+cb_invoices.generate_entry_list:
+  path: '/cbtrials/cb-invoices'
+  defaults:
+    _title: 'CB Invoices'
+    _controller: '\Drupal\cb_invoices\Controller\CbInvoicesController::entryList'
+  requirements:
+    _permission: 'access content'
+
+cb_invoices.list:
+  path: '/cbtrials/cb-invoices/list'
+  defaults:
+    _title: 'List'
+    _controller: '\Drupal\cb_invoices\Controller\CbInvoicesController::entryList'
+  requirements:
+    _permission: 'access content'
+
+cb_invoices.add:
+  path: '/cbtrials/cb-invoices/add'
+  defaults:
+    _title: 'Add entry'
+    _form: '\Drupal\cb_invoices\Form\CbInvoicesAddForm'
+  requirements:
+    _permission: 'access content'
+
+cb_invoices.update:
+  path: '/cbtrials/cb-invoices/update'
+  defaults:
+    _title: 'Update entry'
+    _form: '\Drupal\cb_invoices\Form\CbInvoicesUpdateForm'
+  requirements:
+    _permission: 'access content'
+
+cb_invoices.advanced:
+  path: '/cbtrials/cb-invoices/advanced'
+  defaults:
+    _title: 'Advanced list'
+    _controller: '\Drupal\cb_invoices\Controller\CbInvoicesController::entryAdvancedList'
+  requirements:
+    _permission: 'access content'

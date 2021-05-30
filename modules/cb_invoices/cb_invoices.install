@@ -1,0 +1,103 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the cb_invoices module.
+ */
+
+/**
+ * Implements hook_install().
+ *
+ * Creates some default entries on this module custom table.
+ *
+ * @see hook_install()
+ *
+ * @ingroup cb_invoices
+ */
+function cb_invoices_install() {
+  // Insert some example data into our schema.
+  $entries = [
+    [
+      'name' => 'John',
+      'surname' => 'Doe',
+      'age' => 0,
+    ],
+    [
+      'name' => 'John',
+      'surname' => 'Roe',
+      'age' => 100,
+      'uid' => 1,
+    ],
+  ];
+
+  $connection = \Drupal::database();
+  foreach ($entries as $entry) {
+    $connection->insert('cb_invoices')->fields($entry)->execute();
+  }
+}
+
+/**
+ * Implements hook_schema().
+ *
+ * Defines the database tables used by this module.
+ *
+ * @see hook_schema()
+ *
+ * @ingroup cb_invoices
+ */
+function cb_invoices_schema() {
+  $schema['cb_invoices'] = [
+    'description' => 'Stores example person entries for demonstration purposes.',
+    'fields' => [
+      'pid' => [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique person ID.',
+      ],
+      'uid' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => "Creator user's {users}.uid",
+      ],
+      'name' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Name of the person.',
+      ],
+      'surname' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+        'description' => 'Surname of the person.',
+      ],
+      'age' => [
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'size' => 'tiny',
+        'description' => 'The age of the person in years.',
+      ],
+      'price' => [
+        'type' => 'numeric',
+        'unsigned' => TRUE,
+        'precision' => 12,
+        'scale' => 2,
+        'not null' => FALSE,
+        'default' => 81.22,
+        'description' => 'Creating a numeric field to store currency values.',
+      ],
+    ],
+    'primary key' => ['pid'],
+    'indexes' => [
+      'name' => ['name'],
+      'surname' => ['surname'],
+      'age' => ['age'],
+    ],
+  ];
+
+  return $schema;
+}

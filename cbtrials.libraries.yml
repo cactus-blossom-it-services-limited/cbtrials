@@ -1,0 +1,5 @@
+cbtrials.icons:
+  version: VERSION
+  css:
+    theme:
+      css/cbtrialss.icons.css: {}

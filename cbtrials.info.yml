@@ -1,0 +1,8 @@
+name: CB trials
+type: module
+description: 'Provides example code.'
+package: CB trials modules
+core_version_requirement: ^9
+dependencies:
+  - drupal:toolbar
+

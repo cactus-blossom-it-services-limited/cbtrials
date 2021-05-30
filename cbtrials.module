@@ -1,0 +1,120 @@
+<?php
+
+/**
+ * @file
+ * Module file for Examples for Developers.
+ *
+ * This file serves as a stub file for the many Examples modules in the
+ * @link http://drupal.org/project/examples Examples for Developers Project @endlink
+ * which you can download and experiment with.
+ *
+ * One might say that cbtrials.module is an example of documentation. However,
+ * note that the example submodules define many doxygen groups, which may or
+ * may not be a good strategy for other modules.
+ */
+
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Url;
+
+/**
+ * @defgroup cbtrials CB trials
+ * @{
+ * Custom modules created by Cactus Blossom IT Services Limited
+ */
+
+/**
+ * Implements hook_toolbar().
+ */
+function cbtrials_toolbar() {
+  // First, build an array of all cbtrials modules and their routes.
+  // We resort to this hard-coded way so as not to muck up each example.
+  $cbtrials = _cbtrials_toolbar_routes();
+
+  // Build a list of links for the menu.
+  $links = [];
+  foreach ($cbtrials as $module => $route) {
+
+    // Check if module is installed or not.
+    if (\Drupal::moduleHandler()->moduleExists($module)) {
+
+      // Get the module info (title, description) from Drupal.
+      $info = \Drupal::service('extension.list.module')->getExtensionInfo($module);
+
+      // If there's no info, the example isn't enabled, so don't display it.
+      if (!empty($info)) {
+        $links[$module] = [
+          'title' => Html::escape($info['name']),
+          'url' => Url::fromRoute($route),
+          'attributes' => [
+            'class' => [Html::getClass($module)],
+            'title' => Html::escape($info['description']),
+          ],
+        ];
+      }
+    }
+  }
+
+  // Add a link to enable all cbtrials.
+  $links['enable_cbtrials'] = [
+    'title' => t('Enable CB trials'),
+    'url' => Url::fromRoute('system.modules_list'),
+    'options' => [
+      'title' => t('Enable more cbtrials in on the Extend page.'),
+    ],
+    'fragment' => 'edit-modules-cbtrials-modules',
+  ];
+
+  // Create the examples toolbar render array.
+  $items['examples'] = [
+    '#type' => 'toolbar_item',
+    'tab' => [
+      '#type' => 'link',
+      '#title' => t('CB Trials'),
+      '#url' => Url::fromRoute('<front>'),
+      '#attributes' => [
+        'title' => t('CB trials'),
+        'class' => ['toolbar-icon', 'toolbar-icon-examples'],
+      ],
+    ],
+    'tray' => [
+      '#heading' => t('CB trials'),
+      'shortcuts' => [
+        '#theme' => 'links__toolbar_example',
+        '#links' => $links,
+        '#attributes' => [
+          'class' => ['toolbar-menu'],
+        ],
+      ],
+    ],
+    '#weight' => 99,
+    '#attached' => [
+      'library' => [
+        'cbtrials/cbtrials.icons',
+      ],
+    ],
+  ];
+
+  return $items;
+}
+
+/**
+ * Get a list of toolbar links to provide.
+ *
+ * We've factored this list into a function so that we can use it to test
+ * toolbar routes.
+ *
+ * This function is for internal use.
+ *
+ * @return string[]
+ *   Keyed array of toolbar routes. Keys are the module name which supplies the
+ *   route.
+ */
+function _cbtrials_toolbar_routes() {
+  return [
+    'cb_invoices' => 'cb_invoices.generate_entry_list',
+  ];
+}
+
+/**
+ * @} End of 'defgroup cbtrials'.
+ */

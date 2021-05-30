@@ -1,0 +1,11 @@
+name: CB Invoices
+type: module
+description: 'An invoice management system'
+package: CB trials modules
+core_version_requirement: ^9
+dependencies:
+  - drupal:node
+  - drupal:user
+  - cbtrials:cbtrials
+
+
