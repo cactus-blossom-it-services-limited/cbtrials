@@ -24,6 +24,30 @@ class SimpleForm extends FormBase {
 
     public function buildForm(array $form, FormStateInterface $form_state)
     {
-        // TODO: Implement buildForm() method.
+
+        $form['url'] = [
+            '#type' => 'textfield',
+            '#title' => $this->t('RSS url'),
+        ];
+
+        $form['list_number'] = [
+            '#type' => 'textfield',
+            '#title' => $this->t('Number in list'),
+        ];
+
+        $form['submit'] = [
+            '#type' => 'submit',
+            '#value' => $this->t('Submit')
+        ];
+
+        return $form;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function submitForm(array &$form, FormStateInterface $form_state)
+    {
+        drupal_set_message($form_state->getValue('url'));
     }
 }

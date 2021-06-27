@@ -1,0 +1,7 @@
+cb_simpleform.cb_simple_form:
+  path: 'cb-simple-form'
+  defaults:
+    _form: '\Drupal\cb_simpleform\Form\SimpleForm'
+    _title: 'Simple form'
+  requirements:
+    _permission: 'access content'
